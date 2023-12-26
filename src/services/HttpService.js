@@ -5,7 +5,9 @@ import {Platform} from 'react-native';
 import RNFS from 'react-native-fs';
 
 //Office IP
-export const BASE_URL = 'http://192.168.0.131:5000/';
+// export const BASE_URL = 'http://192.168.0.131:5000/';
+//Server
+export const BASE_URL = 'http://infer.studio/';
 //Home IP
 // export const BASE_URL = 'http://192.168.10.12:5000/';
 
@@ -20,14 +22,10 @@ class HTTPService {
     // Add a request interceptor to include the userId in each request
     instance.interceptors.request.use(
       async config => {
-        console.log('config.headers');
         const userId = await AsyncStorage.getItem('user_id');
-        console.log(userId);
         if (userId) {
           config.headers['X-User-Id'] = userId;
-          console.log(config.headers);
         }
-        console.log(config.headers);
         return config;
       },
       error => {
