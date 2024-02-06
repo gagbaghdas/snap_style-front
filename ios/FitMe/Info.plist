@@ -28,14 +28,14 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>infer.studio</key>
+			<key>104.197.100.113</key>
 			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
 			</dict>
-			<key>104.197.177.52</key>
+			<key>infer.studio</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>

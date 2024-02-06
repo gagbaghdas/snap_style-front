@@ -8,6 +8,7 @@ import RNFS from 'react-native-fs';
 // export const BASE_URL = 'http://192.168.0.131:5000/';
 //Server
 export const BASE_URL = 'http://infer.studio/';
+// export const BASE_URL = 'http://104.197.100.113/';
 //Home IP
 // export const BASE_URL = 'http://192.168.10.12:5000/';
 
@@ -26,6 +27,7 @@ class HTTPService {
         if (userId) {
           config.headers['X-User-Id'] = userId;
         }
+        console.log(config); 
         return config;
       },
       error => {
@@ -41,6 +43,8 @@ class HTTPService {
   }
 
   post(url, data, config = {}) {
+    console.log(url);
+    console.log(data);
     return this.instance.post(url, data, config);
   }
 

@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   Alert,
   DeviceEventEmitter,
+  PermissionsAndroid,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -115,17 +116,20 @@ const MainScreen = () => {
     }
   };
 
-  const handleChoosePhoto = () => {
+  const handleChoosePhoto = async () => {
     const options = {
       noData: true,
     };
+    if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+      return;
+    }
     ImagePicker.launchImageLibrary(options, async response => {
       if (response.assets?.[0]?.uri) {
         try {
           setIsLoading(true); // Start loading
           console.log('uploadResponse');
           const uploadResponse = await HttpService.uploadImage(
-            'upload_main_image',
+            /*'upload_main_image'*/'upload_main_avatar_image',
             response.assets?.[0],
           );
           console.log(uploadResponse);
@@ -142,6 +146,19 @@ const MainScreen = () => {
       }
     });
   };
+
+  const hasAndroidPermission = async () => {
+    const permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
+
+    const hasPermission = await PermissionsAndroid.check(permission);
+    if (hasPermission) {
+      return true;
+    }
+
+    const status = await PermissionsAndroid.request(permission);
+    return status === PermissionsAndroid.RESULTS.GRANTED;
+  };
+
   const selectPrompt = selectedPrompt => {
     setPrompt(selectedPrompt);
   };
@@ -161,7 +178,7 @@ const MainScreen = () => {
         city,
         weather,
       };
-      const response = await HttpService.post('generate_outfit', sendingData);
+      const response = await HttpService.post(/*'generate_outfit'*/'generate_avatar', sendingData);
       console.log(response);
       if (
         response.status === 201 &&
